@@ -1,59 +1,46 @@
-# FitnessFrontend
+# 🏋️‍♂️ Fitness App Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Welcome to the frontend repository for my **Fitness App**, a full-stack web project designed to offer a modern fitness app which is platform independent and offers all features needed to reach your goals. 💪📈
 
-## Development server
+This App provides powerful features to support a fitness journey, including:  
+✅ **Calorie Calculator**  
+✅ **Workout Plan Creation**  
+✅ **Workout Tracking**  
+✅ **Weight Management (Loss/Gain)**  
+…and much more!
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🚀 Technologies Used
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **[Angular](https://angular.dev/):** A powerful framework for building dynamic and efficient single-page web applications.
+- **[Tailwind](https://tailwindcss.com/):** CSS: A utility-first CSS framework for rapid UI development and responsive design.
+- **[NgRx](https://ngrx.io/):** A state management library for Angular, based on Redux principles, providing a clear way to manage application state.
+- **[RxJS](https://rxjs.dev/):** A reactive programming library for handling asynchronous operations with Observables, making the app more efficient and scalable.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 💡 Project Idea  
 
-```bash
-ng generate component component-name
-```
+The goal of this project is to master a **TypeScript-based stack** for web development. The Frontend is built using **Angular**, while the backend (check out its own [repository](https://github.com/DSaatz/fitness-be)) leverages **Nest.js** for an amazing user experience.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+By combining **fitness** and **coding**, this project is a reflection of my two passions, offering an app that’s both fun to build and practical to use. 💻❤️💪
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 🔧 Features  
 
-To build the project run:
+✨ **Calorie Calculator** – Effortlessly track your daily caloric intake.  
+✨ **Workout Plan Builder** – Create tailored workout routines.  
+✨ **Workout Tracking** – Monitor your progress with ease.  
+✨ **Weight Goals** – Stay on top of your weight loss or gain journey.  
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🌟 Why This Project?
 
-## Running unit tests
+This app is more than just a learning project; it’s a way to **bring fitness and tech together**. By mastering a full **TypeScript stack**, I aim to create an app that offers users a seamless and enjoyable experience while helping them achieve their fitness goals.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Feel free to raise issues or suggest new features. Let’s make fitness fun and interactive together! 🏃‍♀️🚴‍♂️💪
