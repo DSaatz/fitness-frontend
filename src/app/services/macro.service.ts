@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { catchError, tap, throwError } from 'rxjs';
 
 interface calculateMacrosDto {
   calories: number;
@@ -22,6 +23,16 @@ export class MacroService {
   constructor(private http: HttpClient) { }
 
   calculateMacros(data: calculateMacrosDto) {
-    return this.http.post<Macros>(`${this.apiUrl}/macros/calculate`, data);
+    console.log("sending this payload to the API", data);
+    return this.http.post<any>(`${this.apiUrl}/macros/calculate`, data)
+    .pipe(
+      tap(response => { // Use tap to log the response
+        console.log('API Response (Macro Service):', response);
+      }),
+      catchError(error => {
+        console.error('Error calculating macros:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

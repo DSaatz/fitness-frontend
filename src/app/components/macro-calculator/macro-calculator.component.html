@@ -1,5 +1,5 @@
 <div *ngIf="macros">
-  <p>Protein: {{ macros?.protein }}g</p> </div>  <p>Carbs: {{ macros?.carbs }}g</p>   <p>Fat: {{ macros?.fat }}g</p>
+  <p>Protein: {{ macros?.protein?.toFixed(0) }}g</p> </div>  <p>Carbs: {{ macros?.carbs?.toFixed(0) }}g</p>   <p>Fat: {{ macros?.fat?.toFixed(0) }}g</p>
 
 <ng-container *ngIf="chartData">
  <canvas baseChart [data]="chartData" [type]="'pie'"></canvas>
