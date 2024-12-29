@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ApiTestComponent } from './components/api-test/api-test.component';
-
+import { CalorieCalculatorComponent } from './components/calorie-calculator/calorie-calculator.component';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ApiTestComponent],
+  standalone: true, // Make AppComponent standalone
+  imports: [CalorieCalculatorComponent], // Import components here
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'] // Better to use styleUrls for component-level styles.
 })
 export class AppComponent {
-  title = 'fitness-frontend';
+    title = 'fitness-frontend';
 }
+
