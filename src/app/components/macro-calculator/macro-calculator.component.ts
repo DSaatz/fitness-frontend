@@ -44,6 +44,16 @@
                         datasets: [
                             {
                                 data: [macros.protein, macros.carbs, macros.fat],
+                                backgroundColor: [
+                                    '#16C47F',
+                                    '#FFD65A',
+                                     '#FF9D23',
+                                  ],
+                                    hoverBackgroundColor: [
+                                      '#0D8C56',
+                                      '#E6BE34',
+                                      '#E68300'
+                                  ]
                             },
                         ],
                     };
