@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CalorieCalculatorComponent } from './components/calorie-calculator/calorie-calculator.component';
-import { NavbarComponent } from "./navbar/navbar.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
 @Component({
   selector: 'app-root',
   standalone: true, // Make AppComponent standalone

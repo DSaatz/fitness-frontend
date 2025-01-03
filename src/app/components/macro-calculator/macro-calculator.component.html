@@ -1,6 +1,35 @@
-<div *ngIf="macros">
-  <p>Protein: {{ macros?.protein?.toFixed(0) }}g</p> </div>  <p>Carbs: {{ macros?.carbs?.toFixed(0) }}g</p>   <p>Fat: {{ macros?.fat?.toFixed(0) }}g</p>
-
-<ng-container *ngIf="chartData">
- <canvas baseChart [data]="chartData" [type]="'pie'"></canvas>
-</ng-container>
+<div
+  *ngIf="chartData"
+  class="bg-fitness-gray-100 p-4 rounded-md shadow-md mt-4 max-w-md mx-auto"
+>
+  <h3 class="text-fitness-gray-900 font-bold mb-2 text-center">Macro Breakdown</h3>
+  <div class="flex items-center justify-center">
+    <canvas baseChart [data]="chartData" [type]="'pie'"></canvas>
+  </div>
+  <div class="flex justify-around mt-4">
+    <div class="text-center">
+      <p class="text-fitness-gray-700">
+        Protein
+        <span class="text-fitness-green-700 block">
+          {{ macros?.protein?.toFixed(0) }}g
+        </span>
+      </p>
+    </div>
+    <div class="text-center">
+      <p class="text-fitness-gray-700">
+        Carbs
+        <span class="text-fitness-green-700 block">
+          {{ macros?.carbs?.toFixed(0) }}g
+        </span>
+      </p>
+    </div>
+    <div class="text-center">
+      <p class="text-fitness-gray-700">
+        Fat
+        <span class="text-fitness-green-700 block">
+          {{ macros?.fat?.toFixed(0) }}g
+        </span>
+      </p>
+    </div>
+  </div>
+</div>

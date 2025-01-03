@@ -1,28 +1,90 @@
-<form (ngSubmit)="calculateCalories()">
-    <label for="weight">Weight (kg):</label>
-    <input type="number" id="weight" [(ngModel)]="weight" name="weight" required><br><br>
-  
-    <label for="bodyFat">Body Fat (%):</label>
-    <input type="number" id="bodyFat" [(ngModel)]="bodyFatPercentage" name="bodyFat"><br><br>
-  
-    <label for="activityLevel">Activity Level:</label>
-    <select id="activityLevel" [(ngModel)]="activityLevel" name="activityLevel">
-      <option *ngFor="let level of activityLevels" [value]="level">{{ level }}</option>
-    </select><br><br>
-  
-  
-    <label for="dietGoal">Diet Goal:</label>
-    <select id="dietGoal" [(ngModel)]="dietGoal" name="dietGoal">
-        <option *ngFor="let goal of dietGoals" [value]="goal">{{ goal }}</option>
-    </select><br><br>
-  
-  
-    <button type="submit">Calculate Calories</button>
+<div class="container mx-auto p-4">
+  <form
+    (ngSubmit)="calculateCalories()"
+    class="bg-fitness-gray-100 p-6 rounded-md shadow-md space-y-4 max-w-md mx-auto"
+  >
+    <h2 class="text-2xl font-bold text-fitness-gray-900 mb-4 text-center">
+      Calorie Calculator
+    </h2>
+    <div class="flex flex-col">
+      <label for="weight" class="text-fitness-gray-700 font-medium mb-1"
+        >Weight (kg):</label
+      >
+      <input
+        type="number"
+        id="weight"
+        [(ngModel)]="weight"
+        name="weight"
+        required
+        class="border border-fitness-gray-300 rounded px-3 py-2 focus:outline-none focus:border-fitness-green-500 text-fitness-gray-700"
+      />
+    </div>
+
+    <div class="flex flex-col">
+      <label for="bodyFat" class="text-fitness-gray-700 font-medium mb-1"
+        >Body Fat (%):</label
+      >
+      <input
+        type="number"
+        id="bodyFat"
+        [(ngModel)]="bodyFatPercentage"
+        name="bodyFat"
+        class="border border-fitness-gray-300 rounded px-3 py-2 focus:outline-none focus:border-fitness-green-500 text-fitness-gray-700"
+      />
+    </div>
+
+    <div class="flex flex-col">
+      <label for="activityLevel" class="text-fitness-gray-700 font-medium mb-1"
+        >Activity Level:</label
+      >
+      <select
+        id="activityLevel"
+        [(ngModel)]="activityLevel"
+        name="activityLevel"
+        class="border border-fitness-gray-300 rounded px-3 py-2 focus:outline-none focus:border-fitness-green-500 text-fitness-gray-700"
+      >
+        <option *ngFor="let level of activityLevels" [value]="level">{{
+          level
+        }}</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="dietGoal" class="text-fitness-gray-700 font-medium mb-1"
+        >Diet Goal:</label
+      >
+      <select
+        id="dietGoal"
+        [(ngModel)]="dietGoal"
+        name="dietGoal"
+        class="border border-fitness-gray-300 rounded px-3 py-2 focus:outline-none focus:border-fitness-green-500 text-fitness-gray-700"
+      >
+        <option *ngFor="let goal of dietGoals" [value]="goal">{{
+          goal
+        }}</option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-fitness-green-500 hover:bg-fitness-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
+    >
+      Calculate Calories
+    </button>
   </form>
-  
-  <div *ngIf="calculatedCalories">
-    Calculated Calories: {{ calculatedCalories }}
+
+  <div
+    *ngIf="calculatedCalories"
+    class="bg-fitness-gray-100 p-4 rounded-md shadow-md text-center mt-4 max-w-md mx-auto"
+  >
+    <p class="text-fitness-gray-900 font-semibold">
+      Calculated Calories:
+      <span class="text-fitness-green-700">{{ calculatedCalories }}</span>
+    </p>
   </div>
-  
-  
-  <app-macro-calculator [calories]="calculatedCalories" [weight]="weight"></app-macro-calculator>
+
+  <app-macro-calculator
+    [calories]="calculatedCalories"
+    [weight]="weight"
+  ></app-macro-calculator>
+</div>
