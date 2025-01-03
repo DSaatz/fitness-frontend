@@ -1,7 +1,15 @@
     // macro-calculator.component.ts
     import { Component, Input, OnChanges } from '@angular/core';
     import { MacroService } from '../../services/macro.service';
-    import { ChartConfiguration } from 'chart.js';
+    import {
+        ChartConfiguration,
+        Chart,
+        PieController,
+        ArcElement,
+        Tooltip,
+        Legend,
+    } from 'chart.js';
+    
     import { CommonModule } from '@angular/common';
     import { BaseChartDirective } from 'ng2-charts';
 
@@ -18,7 +26,9 @@
         macros: { protein: number, carbs: number, fat: number, proteinCalories: number, fatCalories: number, carbCalories: number } | null = null;
         chartData: ChartConfiguration<'pie'>['data'] | null = null;
 
-        constructor(private macroService: MacroService) { }
+        constructor(private macroService: MacroService) {
+            Chart.register(PieController, ArcElement, Tooltip, Legend);
+         }
 
         ngOnChanges() {
             if (this.calories && this.weight) {
@@ -42,5 +52,6 @@
                 this.macros = null;
                 this.chartData = null;
             }
+            console.log(this.chartData);
         }
     }
