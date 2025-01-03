@@ -1,1 +1,3 @@
-<p>workouts works!</p>
+<div class="grid grid-cols-2 gap-4 px-10, py-10">
+    <app-exercise-card *ngFor="let exercise of exercises" [exercise]="exercise"></app-exercise-card>
+  </div>
