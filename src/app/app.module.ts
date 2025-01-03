@@ -6,6 +6,8 @@ import { CalorieCalculatorComponent } from './components/calorie-calculator/calo
 import { MacroCalculatorComponent } from './components/macro-calculator/macro-calculator.component';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { BaseChartDirective } from 'ng2-charts';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
 
 
 
@@ -20,6 +22,9 @@ import { BaseChartDirective } from 'ng2-charts';
         FormsModule,
         BaseChartDirective,
     ],
-    bootstrap: [AppComponent] // Make sure AppComponent is bootstrapped
+    bootstrap: [AppComponent], // Make sure AppComponent is bootstrapped
+    providers: [
+        provideRouter(routes) 
+    ] 
 })
 export class AppModule { }
