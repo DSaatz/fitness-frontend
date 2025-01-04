@@ -1,1 +1,15 @@
-<p>workout-form works!</p>
+<h2 class="text-xl font-bold mb-4">Workout Form</h2>
+<form [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+  <div class="mb-4">
+    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+    <input type="text" id="name" formControlName="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+  </div>
+    <div class="mb-4">
+        <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+        <textarea  id="description" formControlName="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </textarea>
+    </div>
+  <button type="submit" class="bg-fitness-green-500 hover:bg-fitness-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    Save Workout
+  </button>
+</form>

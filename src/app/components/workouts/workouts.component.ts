@@ -1,16 +1,21 @@
-// src/app/components/workouts/workouts.component.ts
 import { Component } from '@angular/core';
-import { ExerciseCardComponent } from '../../shared/exercise-card/exercise-card.component';
-import { mockExercises } from '../../shared/mocks/mock-exercise.data';
 import { CommonModule } from '@angular/common';
+import { WorkoutEditorComponent } from '../workout-editor/workout-editor.component';
+import { WorkoutFormComponent } from '../workout-form/workout-form.component';
+import { WorkoutListComponent } from '../workout-list/workout-list.component';
+import { ExerciseSelectorComponent } from '../exercise-selector/exercise-selector.component';
 
 @Component({
   selector: 'app-workouts',
   standalone: true,
-  imports: [ExerciseCardComponent, CommonModule],
+  imports: [
+    CommonModule,
+    WorkoutEditorComponent,
+    WorkoutFormComponent,
+    WorkoutListComponent,
+    ExerciseSelectorComponent,
+  ],
   templateUrl: './workouts.component.html',
-  styleUrl: './workouts.component.css'
+  styleUrl: './workouts.component.css',
 })
-export class WorkoutsComponent {
-    exercises = mockExercises;
-}
+export class WorkoutsComponent {}

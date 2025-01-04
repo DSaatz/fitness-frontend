@@ -1,1 +1,13 @@
-<p>workout-list works!</p>
+<div *ngIf="loading$ | async" >
+    Loading workouts...
+  </div>
+  
+  <div *ngIf="!(loading$ | async)">
+  <h2 class="text-xl font-bold mb-4">Workout Plans</h2>
+    <div *ngFor="let workout of workouts$ | async" class="mb-2">
+      <div (click)="handleWorkoutSelected(workout._id)" class="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-xl transition-shadow" [ngClass]="{'border-2 border-fitness-yellow-500': (selectedWorkoutId$ | async) === workout._id}">
+         <h3 class="font-semibold">{{ workout.name }}</h3>
+         <p class="text-gray-600">{{ workout.description }}</p>
+       </div>
+    </div>
+  </div>
