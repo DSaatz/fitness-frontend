@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivityLevel } from '../shared/enums/activity-leve.enum';
-import { DietGoal } from '../shared/enums/diet-goal.enum';
+import { ActivityLevel } from '../../shared/enums/activity-leve.enum';
+import { DietGoal } from '../../shared/enums/diet-goal.enum';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { catchError, tap, throwError } from 'rxjs';
 
 interface calculateCaloriesDto{
