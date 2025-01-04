@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import * as WorkoutActions from './workout-editor.actions';
 import { WorkoutEditorService } from './workout-editor.service';
 
@@ -15,12 +15,27 @@ export class WorkoutEffects {
       ofType(WorkoutActions.loadWorkouts),
       switchMap(() =>
         this.workoutService.loadWorkoutPlans().pipe(
-          map((workouts) => WorkoutActions.loadWorkoutsSuccess({ workouts })),
-          catchError((error) => 
+          switchMap((response) => {
+            const workoutPlanIds = response.workoutPlans;
+  
+            // Fetch details for each workout plan ID
+            const workoutDetails$ = workoutPlanIds.map((id) =>
+              this.workoutService.getWorkoutPlanById(id)
+            );
+  
+            // Combine all requests
+            return forkJoin(workoutDetails$).pipe(
+              map((workouts) =>
+                WorkoutActions.loadWorkoutsSuccess({ workouts })
+              )
+            );
+          }),
+          catchError((error) =>
             of(WorkoutActions.loadWorkoutsFailure({ error: error.message }))
           )
         )
       )
     )
   );
+  
 }

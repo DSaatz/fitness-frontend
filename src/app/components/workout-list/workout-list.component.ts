@@ -5,12 +5,13 @@ import { AsyncPipe } from '@angular/common';
 import { NgClass } from '@angular/common';
 import { WorkoutPlan } from '../../shared/interfaces/workout-plan.interface';
 import { selectAllWorkouts, selectLoading, selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-workout-list',
   templateUrl: './workout-list.component.html',
   standalone: true,
-   imports: [AsyncPipe, NgClass],
+   imports: [AsyncPipe, NgClass, CommonModule],
 })
 export class WorkoutListComponent {
   loading$: Observable<boolean>;
