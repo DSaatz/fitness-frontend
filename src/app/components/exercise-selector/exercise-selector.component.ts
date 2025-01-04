@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutPlan } from '../../shared/interfaces/workout-plan.interface';
-import { Observable, filter, switchMap, tap } from 'rxjs';
+import { Observable, catchError, filter, of, switchMap, tap } from 'rxjs';
 import { selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
 import { Store } from '@ngrx/store';
 import { Exercise } from '../../shared/interfaces/exercise.interface';
@@ -23,13 +23,21 @@ export class ExerciseSelectorComponent implements OnInit {
     this.selectedWorkoutId$ = this.store.select(selectSelectedWorkoutId);
   }
   ngOnInit(): void {
-    this.exercises$ = this.selectedWorkoutId$.pipe(
-      filter((selectedWorkoutId) => !!selectedWorkoutId),
-      switchMap((workoutId) => {
-        return this.exercisesService.search('');
+    // Request exercises immediately when component is initialized
+    this.exercises$ = this.exercisesService.search('').pipe(
+      tap((exercises) => {
+        console.log('Exercises received:', exercises);
+      }),
+      catchError((error) => {
+        console.error('Error fetching exercises:', error);
+        return of([]); // Fallback to empty array if there's an error
       })
-    );
+    );  
   }
+  
+  
+  
+  
   toggleExercise(exercise: Exercise) {
     if (this.selectedExercises.includes(exercise._id)) {
       this.selectedExercises = this.selectedExercises.filter(
