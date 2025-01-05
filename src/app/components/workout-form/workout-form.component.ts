@@ -8,12 +8,13 @@ import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { WorkoutPlan } from '../../shared/interfaces/workout-plan.interface';
 import { selectAllWorkouts, selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
 import * as WorkoutActions from '../../services/workouts/workout-editor.actions';
+import { ExerciseSelectorComponent } from '../exercise-selector/exercise-selector.component';
 
 @Component({
   selector: 'app-workout-form',
   templateUrl: './workout-form.component.html',
   standalone: true,
-     imports: [ReactiveFormsModule]
+     imports: [ReactiveFormsModule, ExerciseSelectorComponent]
 })
 export class WorkoutFormComponent implements OnInit, OnDestroy {
   workoutForm!: FormGroup;
@@ -50,20 +51,25 @@ export class WorkoutFormComponent implements OnInit, OnDestroy {
               this.workoutForm.patchValue({
                 name: workout.name,
                 description: workout.description,
-                exercises: workout.exercises,
+                exercises: workout.exerciseNames,
               });
             }
           });
       });
   }
 
+  onExercisesSelected(exercises: string[]) {
+    this.workoutForm.patchValue({
+      exercises: exercises
+    });
+  }
+
   onSubmit() {
     if (this.workoutForm.valid) {
       const workoutPlan = this.workoutForm.value;
-      this.store.dispatch(WorkoutActions.selectWorkout({workoutId: 'test'}))
-      console.log('Form Submitted:', workoutPlan);
-      // Dispatch an action to update the store or call the API.
+      this.store.dispatch(WorkoutActions.createWorkout({ workout: workoutPlan }));
     }
+  
   }
   ngOnDestroy() {
     this.destroy$.next();

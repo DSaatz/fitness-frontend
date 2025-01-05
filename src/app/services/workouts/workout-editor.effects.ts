@@ -17,12 +17,12 @@ export class WorkoutEffects {
         this.workoutService.loadWorkoutPlans().pipe(
           switchMap((response) => {
             const workoutPlanIds = response.workoutPlans;
-  
+ 
             // Fetch details for each workout plan ID
             const workoutDetails$ = workoutPlanIds.map((id) =>
               this.workoutService.getWorkoutPlanById(id)
             );
-  
+ 
             // Combine all requests
             return forkJoin(workoutDetails$).pipe(
               map((workouts) =>
@@ -37,5 +37,18 @@ export class WorkoutEffects {
       )
     )
   );
-  
+
+  createWorkout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WorkoutActions.createWorkout),
+      switchMap(({ workout }) =>
+        this.workoutService.createWorkoutPlan(workout).pipe(
+          map(createdWorkout => WorkoutActions.createWorkoutSuccess({ workout: createdWorkout })),
+          catchError(error => 
+            of(WorkoutActions.createWorkoutFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
 }

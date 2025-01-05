@@ -18,3 +18,18 @@ export const loadWorkoutsFailure = createAction(
   '[WorkoutEditor] Select Workout',
   props<{ workoutId: string}>()
 )
+
+export const createWorkout = createAction(
+  '[WorkoutEditor] Create Workout',
+  props<{ workout: WorkoutPlan }>()
+);
+
+export const createWorkoutSuccess = createAction(
+  '[WorkoutEditor] Create Workout Success',
+  props<{ workout: WorkoutPlan }>()
+);
+
+export const createWorkoutFailure = createAction(
+  '[WorkoutEditor] Create Workout Failure',
+  props<{ error: string }>()
+);
