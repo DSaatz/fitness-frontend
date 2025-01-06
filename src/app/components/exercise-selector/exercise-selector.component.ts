@@ -53,7 +53,7 @@ export class ExerciseSelectorComponent implements OnInit {
   }
   
   
-  
+  //TODO: Add searchbar functionality in component using the exercisesService.search() method and add to the template, follow tutorial from Obsidian
   
 
   toggleExercise(exercise: Exercise) {

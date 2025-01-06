@@ -26,6 +26,10 @@ export class WorkoutListComponent {
     this.selectedWorkoutId$ = this.store.select(selectSelectedWorkoutId);
   }
 
+  //TODO: Add a searchbar here aswell
+  //TODO: Add functionality to delete a workout plan
+  //TODO (low priority): Add functionality to pin favorite to top of list
+
   handleWorkoutSelected(workoutId: string) {
     this.workoutSelected.emit(workoutId);
     console.log('Workout selected:', workoutId);

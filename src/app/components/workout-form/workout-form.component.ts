@@ -75,6 +75,8 @@ export class WorkoutFormComponent implements OnInit, OnDestroy {
     console.log('Updated exercises in form:', this.workoutForm.get('exercises')?.value);
   }
 
+
+  //TODO: Also give option for editing instead of only building a new workout plan (might need changes in backend aswell)
   onSubmit() {
     if (this.workoutForm.valid) {
       const workoutPlan = this.workoutForm.value;
