@@ -11,9 +11,11 @@
   </div>
   
   <app-exercise-selector
-    [selectedExercises]="workoutForm.get('exercises')?.value || []"
-    (exercisesChanged)="onExercisesSelected($event)"
-  />
+  [selectedExercises]="workoutForm.get('exercises')?.value"
+  (exerciseSelection)="onExercisesSelected($event)"
+></app-exercise-selector>
+
+
 
   <button type="submit" class="bg-fitness-green-500 hover:bg-fitness-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
     Save Workout

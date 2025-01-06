@@ -1,12 +1,9 @@
-// src/app/workout-editor/workout-form/workout-form.component.ts
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-
-
 import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { WorkoutPlan } from '../../shared/interfaces/workout-plan.interface';
-import { selectAllWorkouts, selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
+import { selectAllWorkouts, selectSelectedExercises, selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
 import * as WorkoutActions from '../../services/workouts/workout-editor.actions';
 import { ExerciseSelectorComponent } from '../exercise-selector/exercise-selector.component';
 
@@ -14,7 +11,7 @@ import { ExerciseSelectorComponent } from '../exercise-selector/exercise-selecto
   selector: 'app-workout-form',
   templateUrl: './workout-form.component.html',
   standalone: true,
-     imports: [ReactiveFormsModule, ExerciseSelectorComponent]
+  imports: [ReactiveFormsModule, ExerciseSelectorComponent]
 })
 export class WorkoutFormComponent implements OnInit, OnDestroy {
   workoutForm!: FormGroup;
@@ -26,42 +23,56 @@ export class WorkoutFormComponent implements OnInit, OnDestroy {
     this.selectedWorkoutId$ = this.store.select(selectSelectedWorkoutId);
     this.workouts$ = this.store.select(selectAllWorkouts);
   }
+
   ngOnInit(): void {
     this.workoutForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
       exercises: [[]],
     });
+
     this.selectedWorkoutId$
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((selectedWorkoutId) => !!selectedWorkoutId)
-      )
-      .subscribe((selectedWorkoutId) => {
-        this.workouts$
-          .pipe(
-            takeUntil(this.destroy$),
-            filter((workouts) => workouts.length > 0)
-          )
-          .subscribe((workouts) => {
-            const workout = workouts.find(
-              (workout) => workout._id === selectedWorkoutId
+    .pipe(
+      takeUntil(this.destroy$),
+      filter((selectedWorkoutId) => !!selectedWorkoutId)
+    )
+    .subscribe((selectedWorkoutId) => {
+      console.log('Store - Selected Workout ID:', selectedWorkoutId);
+  
+      this.workouts$
+        .pipe(
+          takeUntil(this.destroy$),
+          filter((workouts) => workouts.length > 0)
+        )
+        .subscribe((workouts) => {
+          const workout = workouts.find((workout) => workout._id === selectedWorkoutId);
+          if (workout) {
+            console.log('Store - Selected Workout:', workout);
+            this.workoutForm.patchValue({
+              name: workout.name,
+              description: workout.description,
+              exercises: workout.exercises,  // Use exerciseNames here
+            });
+  
+            // Dispatch action to update selected exercises
+            this.store.dispatch(
+              WorkoutActions.updateSelectedExercises({ exerciseIds: workout.exercises.map((exercise) => exercise._id) }) // Correct property
             );
-            if (workout) {
-              this.workoutForm.patchValue({
-                name: workout.name,
-                description: workout.description,
-                exercises: workout.exerciseNames,
-              });
-            }
-          });
-      });
+          }
+        });
+    });
+  
+  
+
   }
 
-  onExercisesSelected(exercises: string[]) {
-    this.workoutForm.patchValue({
-      exercises: exercises
-    });
+  onExercisesSelected(selectedExercises: string[]): void {
+    this.workoutForm.patchValue({ exercises: selectedExercises });
+    console.log('Updated exercises in form:', this.workoutForm.get('exercises')?.value);
+
+    // Dispatch an action to update the store
+    this.store.dispatch(WorkoutActions.updateSelectedExercises({ exerciseIds: selectedExercises }));
+    console.log('Updated exercises in form:', this.workoutForm.get('exercises')?.value);
   }
 
   onSubmit() {
@@ -69,8 +80,8 @@ export class WorkoutFormComponent implements OnInit, OnDestroy {
       const workoutPlan = this.workoutForm.value;
       this.store.dispatch(WorkoutActions.createWorkout({ workout: workoutPlan }));
     }
-  
   }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

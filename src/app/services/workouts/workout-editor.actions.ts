@@ -33,3 +33,8 @@ export const createWorkoutFailure = createAction(
   '[WorkoutEditor] Create Workout Failure',
   props<{ error: string }>()
 );
+
+export const updateSelectedExercises = createAction(
+  '[WorkoutEditor] Update Selected Exercises',
+  props<{ exerciseIds: string[] }>()
+);

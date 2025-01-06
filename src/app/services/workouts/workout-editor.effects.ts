@@ -51,4 +51,22 @@ export class WorkoutEffects {
       )
     )
   );
+
+  selectWorkout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WorkoutActions.selectWorkout),
+      switchMap(({ workoutId }) =>
+        this.workoutService.getWorkoutPlanById(workoutId).pipe(
+          map((workout) => {
+            const selectedExercises = workout.exercises || []; // Assuming `exerciseNames` contains exercise IDs
+            return WorkoutActions.updateSelectedExercises({ exerciseIds: selectedExercises.map(exercise => exercise._id) });
+          }),
+          catchError((error) =>
+            of(WorkoutActions.loadWorkoutsFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+  
 }

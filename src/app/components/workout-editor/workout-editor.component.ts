@@ -31,6 +31,7 @@ export class WorkoutEditorComponent implements OnInit {
   }
 
   handleWorkoutSelected(workoutId: string) {
+    console.log('Workout selected:', workoutId);
     this.store.dispatch(WorkoutActions.selectWorkout({ workoutId }));
   }
 }

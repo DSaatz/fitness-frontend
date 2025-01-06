@@ -16,3 +16,8 @@ export const selectLoading = createSelector(
   selectWorkoutState,
   (state) => state.loading
 )
+
+export const selectSelectedExercises = createSelector(
+  selectWorkoutState,
+  (state) => state.selectedExercises
+);

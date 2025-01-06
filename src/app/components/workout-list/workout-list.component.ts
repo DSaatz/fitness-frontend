@@ -5,13 +5,14 @@ import { AsyncPipe } from '@angular/common';
 import { NgClass } from '@angular/common';
 import { WorkoutPlan } from '../../shared/interfaces/workout-plan.interface';
 import { selectAllWorkouts, selectLoading, selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
+import * as WorkoutActions from '../../services/workouts/workout-editor.actions';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-workout-list',
   templateUrl: './workout-list.component.html',
   standalone: true,
-   imports: [AsyncPipe, NgClass, CommonModule],
+  imports: [AsyncPipe, NgClass, CommonModule],
 })
 export class WorkoutListComponent {
   loading$: Observable<boolean>;
@@ -27,5 +28,26 @@ export class WorkoutListComponent {
 
   handleWorkoutSelected(workoutId: string) {
     this.workoutSelected.emit(workoutId);
+    console.log('Workout selected:', workoutId);
+  
+    // Retrieve the selected workout's details
+    this.workouts$.subscribe((workouts) => {
+      const selectedWorkout = workouts.find(workout => workout._id === workoutId);
+  
+      if (selectedWorkout) {
+        console.log('Selected workout:', selectedWorkout);
+        console.log('Exercises for workout:', selectedWorkout.exercises);  // Use exerciseNames here
+  
+        // Dispatch the selected exercises to the store
+        this.store.dispatch(
+          WorkoutActions.updateSelectedExercises({ exerciseIds: selectedWorkout.exercises.map(exercise => exercise._id) }) // Correct property
+        );
+      }
+    });
   }
+  
+  
+  
+  
+  
 }
