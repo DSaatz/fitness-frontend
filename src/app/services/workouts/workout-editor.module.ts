@@ -14,6 +14,7 @@ import { WorkoutListComponent } from '../../components/workout-list/workout-list
 import { WorkoutFormComponent } from '../../components/workout-form/workout-form.component';
 import { ExerciseSelectorComponent } from '../../components/exercise-selector/exercise-selector.component';
 import { ExerciseCardComponent } from '../../shared/exercise-card/exercise-card.component';
+import { LucideAngularModule, Trash2 } from 'lucide-angular';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
         WorkoutEditorComponent,
         WorkoutListComponent,
         WorkoutFormComponent,
-        ExerciseSelectorComponent
+        ExerciseSelectorComponent,
+        LucideAngularModule.pick({ Trash2 }),
     ]
 })
 export class WorkoutEditorModule { }

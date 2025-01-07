@@ -67,6 +67,20 @@ export class WorkoutEditorService {
     );
   }
 
+  deleteWorkoutPlan(workoutPlanId: string): Observable<void> {
+    const removeFromUserUrl = `${this.apiUrl}/users/${environment.MOCK_USER_ID}/workout-plan`;
+    const deletePlanUrl = `${this.apiUrl}/workout-plans/${workoutPlanId}`;
+  
+    return this.http.delete<void>(removeFromUserUrl, { body: { workoutPlanId } }).pipe(
+      switchMap(() => this.http.delete<void>(deletePlanUrl)),
+      tap(() => console.log('Workout plan deleted successfully')),
+      catchError((error) => {
+        console.error('Error deleting workout plan:', error);
+        throw error;
+      })
+    );
+  }
+
   getWorkoutPlanById(id: string): Observable<WorkoutPlan> {
     const url = `${this.apiUrl}/workout-plans/${id}`;
     return this.http.get<WorkoutPlan>(url);
