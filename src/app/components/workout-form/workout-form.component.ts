@@ -77,6 +77,12 @@ export class WorkoutFormComponent implements OnInit, OnDestroy {
 
 
   //TODO: Also give option for editing instead of only building a new workout plan (might need changes in backend aswell)
+  //This will need to enable toggling workouts in the list so that when you want to create a new one you can untoggle the selected one
+  //Overall will need to use the selectedWorkoutId$ to check if a workout is selected and then change the button to say "Edit" instead of "Create" (currently says save workout always)
+  //On button press depending on selected or not either create or edit service function will be called
+  //I actually think this can be solved wholy by using the workoutplan's update function in the backend since the workoutplans array from the users reference the workoutplans in the workoutplans collection
+  // For that use the new update function in the workout-editor.service.ts
+  //Now for the toggeling of the selected workout will to rework the state managment in the files
   onSubmit() {
     if (this.workoutForm.valid) {
       const workoutPlan = this.workoutForm.value;

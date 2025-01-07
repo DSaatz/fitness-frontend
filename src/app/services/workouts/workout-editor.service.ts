@@ -81,6 +81,23 @@ export class WorkoutEditorService {
     );
   }
 
+  updateWorkoutPlan(
+    workoutPlanId: string,
+    updatedProperties: Partial<WorkoutPlan>
+  ): Observable<WorkoutPlan> {
+    const url = `${this.apiUrl}/workout-plans/${workoutPlanId}`;
+  
+    console.log('Updating workout plan:', workoutPlanId, updatedProperties);
+  
+    return this.http.put<WorkoutPlan>(url, updatedProperties).pipe(
+      tap((updatedPlan) => console.log('Workout plan updated:', updatedPlan)),
+      catchError((error) => {
+        console.error('Error updating workout plan:', error);
+        throw error; // Re-throw error after logging
+      })
+    );
+  }
+
   getWorkoutPlanById(id: string): Observable<WorkoutPlan> {
     const url = `${this.apiUrl}/workout-plans/${id}`;
     return this.http.get<WorkoutPlan>(url);
