@@ -8,15 +8,17 @@ import { ExercisesService } from '../../services/exercises/exercises.service';
 import { ExerciseCardComponent } from '../../shared/exercise-card/exercise-card.component';
 import { CommonModule } from '@angular/common';
 import * as WorkoutActions from '../../services/workouts/workout-editor.actions';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-exercise-selector',
   templateUrl: './exercise-selector.component.html',
   standalone: true,
-  imports: [ExerciseCardComponent, CommonModule]
+  imports: [ExerciseCardComponent, CommonModule, FormsModule]
 })
 export class ExerciseSelectorComponent implements OnInit {
+  searchTerm = '';
   exercises$!: Observable<Exercise[]>;
   selectedWorkoutId$: Observable<string | null>;
 
@@ -52,8 +54,18 @@ export class ExerciseSelectorComponent implements OnInit {
     );
   }
   
+  onSearchChange(searchTerm: string): void {
+    this.searchTerm = searchTerm;
+    this.exercises$ = this.exercisesService.search(searchTerm).pipe(
+      tap((exercises) => console.log('Fetched Exercises from Service:', exercises)),
+      catchError((error) => {
+        console.error('Error fetching exercises:', error);
+        return of([]); // Return empty array in case of error
+      })
+    );
+  }
   
-  //TODO: Add searchbar functionality in component using the exercisesService.search() method and add to the template, follow tutorial from Obsidian
+
   
 
   toggleExercise(exercise: Exercise) {

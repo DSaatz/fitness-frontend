@@ -1,3 +1,14 @@
+<div>
+  <input
+  type="text"
+  class="w-full p-2 border border-gray-300 rounded"
+  placeholder="Search exercises..."
+  [value]="searchTerm"
+  (input)="onSearchChange($any($event.target).value)"
+  />
+</div>
+
+
 <div *ngIf="selectedExercises && exercises$ | async as exercises; else loading">
     <div *ngIf="exercises.length > 0; else noData">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
