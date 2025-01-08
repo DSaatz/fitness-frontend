@@ -17,7 +17,18 @@
 
 
 
-  <button type="submit" class="bg-fitness-green-500 hover:bg-fitness-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-    Save Workout
-  </button>
+<button
+  type="submit"
+  class="bg-fitness-green-500 hover:bg-fitness-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+>
+  {{ (selectedWorkoutId$ | async) ? 'Update Workout' : 'Create Workout' }}
+</button>
+<button
+  type="button"
+  (click)="clearSelection()"
+  class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+>
+  Clear Selection
+</button>
+
 </form>

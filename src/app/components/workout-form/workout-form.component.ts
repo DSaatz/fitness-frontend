@@ -6,12 +6,13 @@ import { WorkoutPlan } from '../../shared/interfaces/workout-plan.interface';
 import { selectAllWorkouts, selectSelectedExercises, selectSelectedWorkoutId } from '../../services/workouts/workout-editor.selectors';
 import * as WorkoutActions from '../../services/workouts/workout-editor.actions';
 import { ExerciseSelectorComponent } from '../exercise-selector/exercise-selector.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-workout-form',
   templateUrl: './workout-form.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, ExerciseSelectorComponent]
+  imports: [ReactiveFormsModule, ExerciseSelectorComponent, CommonModule]
 })
 export class WorkoutFormComponent implements OnInit, OnDestroy {
   workoutForm!: FormGroup;
@@ -86,9 +87,30 @@ export class WorkoutFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.workoutForm.valid) {
       const workoutPlan = this.workoutForm.value;
-      this.store.dispatch(WorkoutActions.createWorkout({ workout: workoutPlan }));
+      this.selectedWorkoutId$.pipe(takeUntil(this.destroy$)).subscribe(workoutId => {
+        if (workoutId) {
+          // Update existing workout
+          this.store.dispatch(
+            WorkoutActions.updateWorkout({
+              workoutId: workoutId,
+              updatedWorkout: workoutPlan,
+            })
+          );
+        } else {
+          // Create new workout
+          this.store.dispatch(
+            WorkoutActions.createWorkout({ workout: workoutPlan })
+          );
+        }
+      });
     }
   }
+
+  clearSelection() {
+    this.store.dispatch(WorkoutActions.selectWorkout({ workoutId: '' }));
+  }
+  
+  
 
   ngOnDestroy() {
     this.destroy$.next();

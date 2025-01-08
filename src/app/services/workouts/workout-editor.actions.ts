@@ -38,3 +38,19 @@ export const updateSelectedExercises = createAction(
   '[WorkoutEditor] Update Selected Exercises',
   props<{ exerciseIds: string[] }>()
 );
+
+export const updateWorkout = createAction(
+  '[WorkoutEditor] Update Workout',
+  props<{ workoutId: string; updatedWorkout: WorkoutPlan }>()
+);
+
+export const updateWorkoutSuccess = createAction(
+  '[WorkoutEditor] Update Workout Success',
+  props<{ workout: WorkoutPlan }>()
+);
+
+export const updateWorkoutFailure = createAction(
+  '[WorkoutEditor] Update Workout Failure',
+  props<{ error: string }>()
+);
+

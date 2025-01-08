@@ -68,5 +68,22 @@ export class WorkoutEffects {
       )
     )
   );
+
+  updateWorkout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WorkoutActions.updateWorkout),
+      switchMap(({ workoutId, updatedWorkout }) =>
+        this.workoutService.updateWorkoutPlan(workoutId, updatedWorkout).pipe(
+          map((workout) =>
+            WorkoutActions.updateWorkoutSuccess({ workout })
+          ),
+          catchError((error) =>
+            of(WorkoutActions.updateWorkoutFailure({ error: error.message }))
+          )
+        )
+      )
+    )
+  );
+  
   
 }

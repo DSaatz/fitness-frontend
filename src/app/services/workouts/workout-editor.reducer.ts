@@ -46,4 +46,10 @@ export const workoutReducer = createReducer(
       selectedExercises: exerciseIds || [],  // If exerciseIds is undefined, default to an empty array
     };
   }),  
+  on(WorkoutActions.updateWorkoutSuccess, (state, { workout }) => ({
+    ...state,
+    workouts: state.workouts.map((w) =>
+      w._id === workout._id ? workout : w
+    ),
+  }))
 );
