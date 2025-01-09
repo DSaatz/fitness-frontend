@@ -15,7 +15,7 @@ export const routes: Routes = [
     { path: 'calories', 
       loadComponent: () => import('./components/calorie-calculator/calorie-calculator.component').then(m => m.CalorieCalculatorComponent)
      },
-    { path: 'workouts', 
+    { path: 'workout-editor', 
       loadComponent: () => import('./components/workouts/workouts.component').then(m => m.WorkoutsComponent)
      },
     { path: 'progress', 

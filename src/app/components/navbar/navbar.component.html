@@ -1,93 +1,86 @@
 <nav class="bg-fitness-green-500 text-white shadow-md">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <!-- Logo/Brand -->
       <a routerLink="/" class="font-bold text-2xl"> Fitness </a>
-  
+
       <!-- Mobile Menu Button (Hidden on larger screens) -->
       <button (click)="toggleMobileMenu()" class="block md:hidden focus:outline-none">
-        <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-          <path
-            *ngIf="!isMobileMenuOpen"
-            fill-rule="evenodd"
-            d="M3 5h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm0 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm0 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2z"
-          />
-          <path
-            *ngIf="isMobileMenuOpen"
-            fill-rule="evenodd"
-            d="M18.6 5.6L18.4 5.4l-1.2-1.2a.5.5 0 0 0-.7 0l-3.5 3.5-3.5-3.5a.5.5 0 0 0-.7 0l-1.2 1.2-3.5 3.5-1.2-1.2a.5.5 0 0 0-.7 0l-1.2 1.2a.5.5 0 0 0 0 .7l3.5 3.5-3.5 3.5a.5.5 0 0 0 0 .7l1.2 1.2a.5.5 0 0 0 .7 0l3.5-3.5 3.5 3.5a.5.5 0 0 0 .7 0l1.2-1.2 3.5-3.5 1.2 1.2a.5.5 0 0 0 .7 0l1.2-1.2-3.5-3.5 3.5-3.5a.5.5 0 0 0 0-.7z"
-          />
-        </svg>
+          <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+              <path
+                  *ngIf="!isMobileMenuOpen"
+                  fill-rule="evenodd"
+                  d="M3 5h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm0 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2zm0 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2z"
+              />
+              <path
+                  *ngIf="isMobileMenuOpen"
+                  fill-rule="evenodd"
+                  d="M18.6 5.6L18.4 5.4l-1.2-1.2a.5.5 0 0 0-.7 0l-3.5 3.5-3.5-3.5a.5.5 0 0 0-.7 0l-1.2 1.2-3.5 3.5-1.2-1.2a.5.5 0 0 0-.7 0l-1.2 1.2a.5.5 0 0 0 0 .7l3.5 3.5-3.5 3.5a.5.5 0 0 0 0 .7l1.2 1.2a.5.5 0 0 0 .7 0l3.5-3.5 3.5 3.5a.5.5 0 0 0 .7 0l1.2-1.2 3.5-3.5 1.2 1.2a.5.5 0 0 0 .7 0l1.2-1.2-3.5-3.5 3.5-3.5a.5.5 0 0 0 0-.7z"
+              />
+          </svg>
       </button>
-  
+
       <!-- Navigation Links (Hidden on mobile, visible on larger screens) -->
       <div class="hidden md:flex space-x-6">
-        <a
-          routerLink="/calories"
-          routerLinkActive="text-fitness-yellow-500"
-          class="hover:text-fitness-green-900"
-          >Calorie Calculator</a
-        >
-        <a
-          routerLink="/workouts"
-          routerLinkActive="text-fitness-yellow-500"
-          class="hover:text-fitness-green-900"
-          >Workouts</a
-        >
-        <a
-          routerLink="/progress"
-          routerLinkActive="text-fitness-yellow-500"
-          class="hover:text-fitness-green-900"
-          >Journey</a
-        >
-        <a
-          routerLink="/blog"
-          routerLinkActive="text-fitness-yellow-500"
-          class="hover:text-fitness-green-900"
-          >Blog</a
-        >
-        <a
-          routerLink="/account"
-          routerLinkActive="text-fitness-yellow-500"
-          class="hover:text-fitness-green-900"
-          >Account</a
-        >
+          <ng-container *ngFor="let navItem of navItems">
+              <div class="relative" *ngIf="navItem.dropdown; else noDropdown">
+                  <a
+                       [routerLink]="navItem.routerLink"
+                      routerLinkActive="text-fitness-yellow-500"
+                      class="hover:text-fitness-green-900 cursor-pointer inline-block"
+                       (mouseenter)="showDropdown(navItem)"
+                      (mouseleave)="hideDropdown(navItem)">
+                       {{ navItem.label }}
+                  </a>
+                  <div *ngIf="navItem.isDropdownOpen"
+                      class="absolute left-0 mt-2 py-2 w-48 bg-fitness-gray-800 shadow-lg rounded z-10"
+                          (mouseenter)="showDropdown(navItem)"
+                          (mouseleave)="hideDropdown(navItem)">
+                      <a
+                          *ngFor="let dropItem of navItem.dropdown"
+                          [routerLink]="dropItem.routerLink"
+                          routerLinkActive="text-fitness-yellow-500"
+                          class="block py-2 px-4 hover:text-fitness-green-900">
+                          {{ dropItem.label }}
+                      </a>
+                  </div>
+              </div>
+              <ng-template #noDropdown>
+                  <a
+                      [routerLink]="navItem.routerLink"
+                      routerLinkActive="text-fitness-yellow-500"
+                      class="hover:text-fitness-green-900"
+                  >
+                      {{ navItem.label }}
+                  </a>
+              </ng-template>
+          </ng-container>
       </div>
-  
+
       <!-- Mobile Navigation Dropdown -->
       <div
-        [class.hidden]="!isMobileMenuOpen"
-        class="md:hidden absolute top-16 right-0 bg-fitness-gray-800 p-4 w-1/2"
+          [class.hidden]="!isMobileMenuOpen"
+          class="md:hidden absolute top-16 right-0 bg-fitness-gray-800 p-4 w-1/2"
       >
-        <a
-          routerLink="/calories"
-          routerLinkActive="text-fitness-yellow-500"
-          class="block py-2 hover:text-fitness-green-900"
-          >Calorie Calculator</a
-        >
-        <a
-          routerLink="/workouts"
-          routerLinkActive="text-fitness-yellow-500"
-          class="block py-2 hover:text-fitness-green-900"
-          >Workouts</a
-        >
-        <a
-          routerLink="/progress"
-          routerLinkActive="text-fitness-yellow-500"
-          class="block py-2 hover:text-fitness-green-900"
-          >Journey</a
-        >
-        <a
-          routerLink="/blog"
-          routerLinkActive="text-fitness-yellow-500"
-          class="block py-2 hover:text-fitness-green-900"
-          >Blog</a
-        >
-          <a
-          routerLink="/account"
-          routerLinkActive="text-fitness-yellow-500"
-          class="block py-2 hover:text-fitness-green-900"
-          >Account</a
-        >
+          <ng-container *ngFor="let navItem of navItems">
+              <a
+                *ngIf="!navItem.dropdown"
+                  [routerLink]="navItem.routerLink"
+                  routerLinkActive="text-fitness-yellow-500"
+                  class="block py-2 hover:text-fitness-green-900"
+              >
+                  {{ navItem.label }}
+              </a>
+              <div *ngIf="navItem.dropdown">
+                 <p class="block py-2 ">{{ navItem.label }}</p>
+                  <a
+                  *ngFor="let dropItem of navItem.dropdown"
+                  [routerLink]="dropItem.routerLink"
+                  routerLinkActive="text-fitness-yellow-500"
+                     class="block py-2 px-4 hover:text-fitness-green-900">
+                      {{ dropItem.label }}
+                  </a>
+              </div>
+          </ng-container>
       </div>
-    </div>
-  </nav>
+  </div>
+</nav>
