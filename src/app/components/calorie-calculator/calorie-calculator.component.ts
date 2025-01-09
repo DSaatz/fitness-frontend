@@ -1,7 +1,7 @@
 // calorie-calculator.component.ts
 import { Component } from '@angular/core';
 import { DietGoal } from '../../shared/enums/diet-goal.enum';
-import { CalorieService } from '../../services/calorie.service';
+import { CalorieService } from '../../services/nutrition/calorie.service';
 import { FormsModule } from '@angular/forms';
 import { ActivityLevel } from '../../shared/enums/activity-leve.enum'; 
 import { CommonModule } from '@angular/common';

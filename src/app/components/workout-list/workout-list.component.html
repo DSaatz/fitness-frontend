@@ -1,0 +1,22 @@
+<div *ngIf="loading$ | async">
+  Loading workouts...
+</div>
+<div *ngIf="!(loading$ | async)">
+  <h2 class="text-xl font-bold mb-4">Workout Plans</h2>
+  <div *ngFor="let workout of workouts$ | async" class="mb-2">
+    <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-xl transition-shadow flex justify-between items-center" 
+         [ngClass]="{'border-2 border-fitness-yellow-500': (selectedWorkoutId$ | async) === workout._id}">
+      <div class="cursor-pointer flex-grow" (click)="handleWorkoutSelected(workout._id)">
+        <h3 class="font-semibold">{{ workout.name }}</h3>
+        <p class="text-gray-600">{{ workout.description }}</p>
+      </div>
+      <button class="p-2 hover:bg-red-100 rounded-full transition-colors" 
+      (click)="confirmDelete(workout)">
+      <button class="p-2 hover:bg-red-100 rounded-full transition-colors" 
+      (click)="confirmDelete(workout)">
+      <ng-icon name="heroTrash" [attr.width]="'24'" [attr.height]="'24'" class="text-red-500"></ng-icon>
+</button>
+  </button>
+    </div>
+  </div>
+</div>

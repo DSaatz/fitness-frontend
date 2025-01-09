@@ -1,0 +1,33 @@
+<div>
+  <input
+  type="text"
+  class="w-full p-2 border border-gray-300 rounded"
+  placeholder="Search exercises..."
+  [value]="searchTerm"
+  (input)="onSearchChange($any($event.target).value)"
+  />
+</div>
+
+
+<div *ngIf="selectedExercises && exercises$ | async as exercises; else loading">
+    <div *ngIf="exercises.length > 0; else noData">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div *ngFor="let exercise of exercises">
+          <app-exercise-card
+            [exercise]="exercise"
+            [isSelected]="isSelected(exercise)"
+            (toggle)="toggleExercise($event)"
+          ></app-exercise-card>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noData>
+      <p class="text-gray-500">No exercises found. Try searching again!</p>
+    </ng-template>
+  </div>
+  
+  <ng-template #loading>
+    <p class="text-gray-500">Loading exercises...</p>
+  </ng-template>
+  

@@ -1,6 +1,6 @@
     // macro-calculator.component.ts
     import { Component, Input, OnChanges } from '@angular/core';
-    import { MacroService } from '../../services/macro.service';
+    import { MacroService } from '../../services/nutrition/macro.service';
     import {
         ChartConfiguration,
         Chart,
