@@ -1,4 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
+// app.config.ts
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode, SecurityContext } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -7,6 +8,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { workoutReducer } from './services/workouts/workout-editor.reducer';
 import { WorkoutEffects } from './services/workouts/workout-editor.effects';
+import { provideMarkdown } from 'ngx-markdown';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,10 +16,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideStore({ 'workout-editor': workoutReducer }),
-    provideEffects(WorkoutEffects),  // Only provide effects once
-    provideStoreDevtools({ 
-      maxAge: 25, 
-      logOnly: !isDevMode() 
+    provideEffects(WorkoutEffects),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode()
+    }),
+    // Add Markdown provider
+    provideMarkdown({
+      sanitize: SecurityContext.HTML
     })
   ]
 };

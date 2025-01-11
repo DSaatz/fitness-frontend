@@ -1,11 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MarkdownComponent } from 'ngx-markdown';
+import { BlogService, BlogPost } from '../../../../services/blog/blog.service';
 
 @Component({
   selector: 'app-blog-editor',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MarkdownComponent],
   templateUrl: './blog-editor.component.html',
-  styleUrl: './blog-editor.component.css'
+  styleUrls: ['./blog-editor.component.css']
 })
-export class BlogEditorComponent {
+export class BlogEditorComponent implements OnInit {
+  blogForm: FormGroup;
+  isEditing = false;
+  postId: string | null = null;
 
+  constructor(
+    private fb: FormBuilder,
+    private blogService: BlogService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.blogForm = this.fb.group({
+      title: ['', Validators.required],
+      content: ['', Validators.required],
+      userId: ['676d9daa7819f6e4d91baabc']
+    });
+  }
+
+  ngOnInit() {
+    this.postId = this.route.snapshot.paramMap.get('id');
+    if (this.postId) {
+      this.isEditing = true;
+      this.blogService.getPost(this.postId).subscribe(post => {
+        this.blogForm.patchValue(post);
+      });
+    }
+  }
+
+  onSubmit() {
+    if (this.blogForm.valid) {
+      const post = this.blogForm.value;
+      
+      if (this.isEditing && this.postId) {
+        this.blogService.updatePost(this.postId, post).subscribe(() => {
+          this.router.navigate(['/blog']);
+        });
+      } else {
+        this.blogService.createPost(post).subscribe(() => {
+          this.router.navigate(['/blog']);
+        });
+      }
+    }
+  }
 }
