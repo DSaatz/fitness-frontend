@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { MarkdownComponent } from 'ngx-markdown';
 import { BlogService, BlogPost } from '../../../../services/blog/blog.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-blog-editor',
@@ -27,7 +28,7 @@ export class BlogEditorComponent implements OnInit {
     this.blogForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-      userId: ['676d9daa7819f6e4d91baabc']
+      userId: [environment.MOCK_USER_ID]
     });
   }
 

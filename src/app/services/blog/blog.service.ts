@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+
+//TODO: As soon as auth is implemented, make only the user's posts editable and deletable
+//TODO: Also only then render the buttons for editing and deleting
 export interface BlogPost {
   _id?: string;
   userId: string;
