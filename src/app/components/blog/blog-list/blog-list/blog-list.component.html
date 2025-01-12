@@ -1,0 +1,37 @@
+<div class="container mx-auto p-4">
+    <div class="flex justify-between mb-4">
+      <h1 class="text-2xl font-bold">Blog Posts</h1>
+      <button routerLink="/blog/new" class="bg-fitness-green-500 text-white px-4 py-2 rounded">
+        New Post
+      </button>
+    </div>
+    
+    <div class="grid gap-6">
+      <div *ngFor="let post of posts" class="bg-slate-100 border p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <h2 class="text-2xl font-bold mb-2">{{post.title}}</h2>
+        
+        <div class="prose prose-sm mb-4">
+          <markdown [data]="getContentPreview(post.content)"></markdown>
+        </div>
+        
+        <div class="flex gap-2 mt-4">
+          <button [routerLink]="['/blog/view', post._id]" 
+                  class="bg-fitness-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition-colors">
+            Read More
+          </button>
+          <button [routerLink]="['/blog/edit', post._id]"
+                  class="bg-fitness-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition-colors">
+            Edit
+          </button>
+          <button (click)="deletePost(post._id!)"
+                  class="bg-fitness-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="posts.length === 0" class="text-center py-8">
+      <p class="text-gray-500">No blog posts yet. Create your first post!</p>
+    </div>
+  </div>
