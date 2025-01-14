@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { ExerciseCardComponent } from "../../../shared/exercise-card/exercise-card.component";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { WorkoutPlan } from "../../../shared/interfaces/workout-plan.interface";
 import { ExerciseRecord } from "../../../shared/interfaces/exercise-record.interface";
 import { Exercise } from "../../../shared/interfaces/exercise.interface";
@@ -19,14 +19,8 @@ import { environment } from "../../../../environments/environment";
     ExerciseCardComponent
   ]
 })
-export class ExerciseViewComponent implements OnInit {
-  @Input() set workoutPlan(plan: WorkoutPlan | null) {
-    if (plan) {
-      this.exercises = plan.exercises.map(e => ({ ...e, muscleGroup: 'default' }));
-      this.loadExerciseRecords();
-    }
-  }
-
+export class ExerciseViewComponent implements OnInit, OnChanges {
+  @Input() workoutPlan: WorkoutPlan | null = null;
   exercises: Exercise[] = [];
   exerciseRecords: { [key: string]: ExerciseRecord } = {};
 
@@ -36,11 +30,23 @@ export class ExerciseViewComponent implements OnInit {
     this.loadExerciseRecords();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['workoutPlan'] && changes['workoutPlan'].currentValue) {
+      console.log('Workout plan changed:', this.workoutPlan);
+      this.exercises = (this.workoutPlan?.exercises || []).map(exercise => ({
+        ...exercise,
+        muscleGroup: ""
+      }));
+      console.log('Updated exercises array:', this.exercises);
+      this.loadExerciseRecords();
+    }
+  }
+
   loadExerciseRecords() {
     this.workoutTrackingService.getAllExerciseRecordsForUser(environment.MOCK_USER_ID)
       .subscribe({
         next: (records) => {
-          // Create a map of exercise records by exercise ID
+          console.log('Loaded exercise records:', records);
           this.exerciseRecords = records.reduce((acc, record) => {
             acc[record.exerciseId] = record;
             return acc;
@@ -51,7 +57,6 @@ export class ExerciseViewComponent implements OnInit {
   }
 
   onExerciseToggle(exercise: Exercise) {
-    // This method can be used to handle exercise selection if needed
     console.log('Exercise toggled:', exercise);
   }
 

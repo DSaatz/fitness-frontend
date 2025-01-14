@@ -24,12 +24,28 @@ export class WorkoutSelectorComponent implements OnInit {
 
   private loadWorkoutPlans() {
     this.workoutEditorService.loadWorkoutPlans().subscribe({
-      next: (response) => {
-        response.workoutPlans.forEach(planId => {
-          this.workoutEditorService.getWorkoutPlanById(planId).subscribe({
-            next: (plan) => this.workoutPlans.push(plan),
-            error: (error) => console.error('Error loading workout plan:', error)
-          });
+      next: (response: any) => {
+        console.log('Workout plans response:', response);
+        // Now handling the case where response.workoutPlans exists
+        const planIds = response.workoutPlans || [];
+        
+        // Create an array to store all our plan loading promises
+        const planPromises = planIds.map((planId: string) => 
+          new Promise<WorkoutPlan>((resolve) => {
+            this.workoutEditorService.getWorkoutPlanById(planId).subscribe({
+              next: (plan) => resolve(plan),
+              error: (error) => {
+                console.error('Error loading workout plan:', error);
+                resolve(null as any);
+              }
+            });
+          })
+        );
+
+        // Wait for all plans to load
+        Promise.all(planPromises).then(plans => {
+          this.workoutPlans = plans.filter(plan => plan != null);
+          console.log('Loaded workout plans:', this.workoutPlans);
         });
       },
       error: (error) => console.error('Error loading workout plans:', error)
@@ -43,6 +59,7 @@ export class WorkoutSelectorComponent implements OnInit {
     if (selectedPlanId) {
       const selectedPlan = this.workoutPlans.find(plan => plan._id === selectedPlanId);
       if (selectedPlan) {
+        console.log('Emitting selected plan:', selectedPlan);
         this.workoutSelected.emit(selectedPlan);
       }
     }
