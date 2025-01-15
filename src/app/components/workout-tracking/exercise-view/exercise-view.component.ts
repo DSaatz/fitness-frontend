@@ -30,7 +30,7 @@ export class ExerciseViewComponent implements OnInit, OnChanges {
     this.loadExerciseRecords();
   }
 
-  //TODO: fix that you can toggle exercise card (override to null if possible), it is useless in this context
+  //TODO: fix that you can toggle exercise card (override to null if possible), it is useless in this context (will move into backlog for now)
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['workoutPlan'] && changes['workoutPlan'].currentValue) {
