@@ -35,7 +35,7 @@ export class ExerciseViewComponent implements OnInit, OnChanges {
       console.log('Workout plan changed:', this.workoutPlan);
       this.exercises = (this.workoutPlan?.exercises || []).map(exercise => ({
         ...exercise,
-        muscleGroup: ""
+        muscleGroup: exercise.muscleGroup 
       }));
       console.log('Updated exercises array:', this.exercises);
       this.loadExerciseRecords();
