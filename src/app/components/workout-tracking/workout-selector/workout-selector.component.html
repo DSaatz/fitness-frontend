@@ -1,0 +1,11 @@
+<div class="bg-white rounded-lg shadow p-4">
+    <h2 class="text-xl font-semibold mb-4">Select Workout</h2>
+    <div class="grid gap-4">
+        <select class="form-select w-full p-2 border rounded" (change)="onWorkoutSelect($event)">
+            <option value="">Choose a workout plan</option>
+            <option *ngFor="let plan of workoutPlans" [value]="plan._id">
+                {{ plan.name }}
+            </option>
+        </select>
+    </div>
+</div>

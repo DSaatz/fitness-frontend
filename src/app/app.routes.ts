@@ -25,6 +25,10 @@ export const routes: Routes = [
       loadComponent: () => import('./components/progress/progress.component').then(m => m.ProgressComponent)
      },
      {
+      path: "workout-tracking",
+      loadComponent: () => import('./components/workout-tracking/workout-tracker/workout-tracker.component').then(m => m.WorkoutTrackerComponent)
+     },
+     {
       path: 'blog',
       children: [
         { path: '', component: BlogListComponent },
