@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { BlogListComponent } from './components/blog/blog-list/blog-list/blog-list.component';
 import { BlogEditorComponent } from './components/blog/blog-editor/blog-editor/blog-editor.component';
 import { BlogViewComponent } from './components/blog/blog-view/blog-view/blog-view.component';
+import { NutritionTrackingComponent } from './components/nutrition-tracking/nutrition-tracking.component';
 
 export const routes: Routes = [
     { path: '',  pathMatch: 'full',
@@ -40,7 +41,10 @@ export const routes: Routes = [
     {path : 'account', 
       loadComponent: () => import('./components/account/account.component').then(m => m.AccountComponent)
     },
+    {path: "nutrition-tracking",
+      loadComponent: () => import('./components/nutrition-tracking/nutrition-tracking.component').then(m => m.NutritionTrackingComponent)
+    },
     {path : '**', 
       loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent)
-    }
+    },
 ];
